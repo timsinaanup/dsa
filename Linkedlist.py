@@ -2,6 +2,7 @@ class Node:
     def __init__(self,new_data):
         self.data = new_data
         self.next = None
+        self.prev = None
 
 class Linkedlist:
     def __init__(self):
@@ -102,20 +103,41 @@ class Linkedlist:
     def insert_value_at_position(self,pos,val):
 
         current = self.head
+        index = 0
+        if self.count_nodes() < pos or pos < 0: 
+            print("Invalid Position")
+            return
+
+        if pos == 0:
+            new_head = Node(val)
+            new_head.next = current
+            self.head = new_head
+            index += 1
+
+        current = self.head
+        while current.next is not None:
+            if (index + 1) == pos:
+                new_current = Node(val)
+                new_current.next = current.next
+                current.next = new_current
+            current = current.next
+            index += 1
         
+        if pos == self.count_nodes():
+            current.next = Node(val)
+
+
 
     
-                    
 
-
-            
-my_list = [1,2,3,5]
+my_list = [1,2,3,4,5]
 
 ll = Linkedlist()
 try:
     ll.list_to_ll(my_list)
     print(my_list)
-
+    ll.travel_linked_list()
+    ll.reverse_list()
     
 except Exception as e:
     print(type(e))
